@@ -1,0 +1,69 @@
+<div class="shop">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <div class="hero-text">
+        <div class="hero-badge">
+          <span>🍕</span>
+          <span class="quick-delivery">Quick delivery</span>
+        </div>
+        <h1 class="hero-title">
+          Fastest Delivery &<br>
+          Easy Pickup.
+        </h1>
+        <p class="hero-description">
+          Order any meal at any time and we will deliver<br>
+          it directly to your home.
+        </p>
+        <button mat-raised-button class="order-btn" routerLink="/" [queryParams]="{category: 'all'}">
+          Make an order
+        </button>
+        <div class="specials-link">
+          <a routerLink="/" [queryParams]="{category: 'all'}">
+            Specials for lunch
+            <mat-icon>arrow_forward</mat-icon>
+          </a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="food-bowl-placeholder">
+          <mat-icon class="food-icon">restaurant</mat-icon>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <h2 class="menu-title">Our Menu</h2>
+  
+  <!-- Category Filter Badges -->
+  <div class="category-filter" *ngIf="selectedCategory !== 'all'">
+    <span class="filter-badge">
+      Showing: {{ selectedCategory | titlecase }}
+      <button mat-icon-button (click)="selectedCategory = 'all'; filterProducts()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </span>
+  </div>
+
+  <!-- Loading Spinner -->
+  <app-spinner *ngIf="loading"></app-spinner>
+
+  <!-- Products Grid -->
+  <div class="products-grid" *ngIf="!loading">
+    <app-product-card 
+      *ngFor="let p of filteredProducts" 
+      [product]="p" 
+      (add)="onAdd($event)">
+    </app-product-card>
+  </div>
+
+  <!-- No Products Message -->
+  <div class="no-products" *ngIf="!loading && filteredProducts.length === 0">
+    <mat-icon>restaurant</mat-icon>
+    <h3>No items found</h3>
+    <p *ngIf="selectedCategory !== 'all'">Try selecting a different category</p>
+    <button mat-raised-button color="primary" routerLink="/" [queryParams]="{category: 'all'}">
+      View All Items
+    </button>
+  </div>
+</div>

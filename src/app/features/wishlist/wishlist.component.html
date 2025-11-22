@@ -1,0 +1,60 @@
+<div class="wishlist-container">
+  <div class="wishlist-header">
+    <mat-icon class="wishlist-icon">favorite</mat-icon>
+    <h1>My Wishlist</h1>
+    <p>Save your favorite items here</p>
+  </div>
+
+  <div class="wishlist-content">
+    <ng-container *ngIf="wishlistItems$ | async as items">
+      <!-- Empty State -->
+      <div class="empty-wishlist" *ngIf="items.length === 0">
+        <mat-icon>favorite_border</mat-icon>
+        <h3>Your wishlist is empty</h3>
+        <p>Start adding items you love to your wishlist</p>
+        <button mat-raised-button color="primary" routerLink="/">
+          Browse Menu
+        </button>
+      </div>
+
+      <!-- Wishlist Items Grid -->
+      <div class="wishlist-grid" *ngIf="items.length > 0">
+        <div class="wishlist-item" *ngFor="let item of items">
+          <div class="item-image">
+            <img [src]="item.image" [alt]="item.name" />
+            <button 
+              mat-icon-button 
+              class="remove-btn" 
+              (click)="removeFromWishlist(item.id)"
+              matTooltip="Remove from wishlist">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+          
+          <div class="item-details">
+            <h3>{{ item.name }}</h3>
+            <p class="item-description">{{ item.description }}</p>
+            
+            <div class="item-footer">
+              <div class="item-price">
+                <span class="currency">₹</span>
+                <span class="amount">{{ item.price }}</span>
+              </div>
+              
+              <div class="item-actions">
+                <button 
+                  mat-raised-button 
+                  color="primary" 
+                  (click)="addToCart(item)"
+                  class="add-to-cart-btn">
+                  <mat-icon>shopping_cart</mat-icon>
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

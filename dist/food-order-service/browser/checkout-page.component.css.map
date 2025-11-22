@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/cart/checkout-page/checkout-page.component.ts"],
+  "sourcesContent": [".full{width:100%}.summary{margin:12px 0}"],
+  "mappings": ";AAAA,CAAA;AAAM,SAAA;;AAAW,CAAA;AAAS,UAAA,KAAA;;",
+  "names": []
+}

@@ -1,0 +1,53 @@
+<div class="cart-container">
+  <h2>Your Cart</h2>
+  
+  <div *ngIf="(items$ | async) as items">
+    <div *ngIf="items.length === 0" class="empty-cart">
+      <p>Your cart is empty</p>
+      <button mat-raised-button color="primary" routerLink="/">Continue Shopping</button>
+    </div>
+
+    <mat-list *ngIf="items.length > 0">
+      <mat-list-item *ngFor="let item of items" class="cart-item">
+        <img matListItemAvatar [src]="item.image || 'https://via.placeholder.com/80'" [alt]="item.name" class="item-image">
+        
+        <div matListItemTitle class="item-details">
+          <h3>{{ item.name }}</h3>
+          <p class="item-price">₹{{ item.price }} each</p>
+        </div>
+        
+        <div matListItemLine class="item-controls">
+          <div class="quantity-controls">
+            <button mat-icon-button (click)="dec(item)" [disabled]="item.qty <= 1">
+              <mat-icon>remove</mat-icon>
+            </button>
+            <span class="quantity">{{ item.qty }}</span>
+            <button mat-icon-button (click)="inc(item)">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+          
+          <div class="item-total">
+            <strong>₹{{ item.price * item.qty }}</strong>
+          </div>
+          
+          <button mat-icon-button color="warn" (click)="remove(item)" class="remove-btn">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </mat-list-item>
+    </mat-list>
+
+    <div *ngIf="items.length > 0" class="cart-summary">
+      <div class="total">
+        <h3>Total: ₹{{ total }}</h3>
+      </div>
+      <div class="actions">
+        <button mat-raised-button routerLink="/">Continue Shopping</button>
+        <button mat-raised-button color="primary" (click)="checkout()" [disabled]="total === 0">
+          Proceed to Checkout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

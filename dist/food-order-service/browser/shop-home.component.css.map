@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/shop/shop-home/shop-home.component.ts"],
+  "sourcesContent": ["\n    .products-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }\n  "],
+  "mappings": ";AACI,CAAA;AAAiB,WAAA;AAAc,yBAAA,OAAA,QAAA,EAAA,OAAA,KAAA,EAAA;AAA0D,OAAA;;",
+  "names": []
+}

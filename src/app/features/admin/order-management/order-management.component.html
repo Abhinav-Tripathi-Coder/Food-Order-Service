@@ -1,0 +1,105 @@
+<div class="order-management-container">
+  <div class="page-header">
+    <h2>Order Management</h2>
+    <p class="subtitle">Manage and track all customer orders</p>
+  </div>
+
+  <div class="filters-section">
+    <mat-form-field appearance="outline">
+      <mat-label>Filter by Status</mat-label>
+      <mat-select [(value)]="selectedStatus" (selectionChange)="onStatusFilterChange()">
+        <mat-option *ngFor="let option of statusOptions" [value]="option.value">
+          {{ option.label }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    
+    <div class="order-count">
+      Total Orders: <strong>{{ filteredOrders.length }}</strong>
+    </div>
+  </div>
+
+  <div class="loading-spinner" *ngIf="loading">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Loading orders...</p>
+  </div>
+
+  <div class="no-orders" *ngIf="!loading && filteredOrders.length === 0">
+    <mat-icon>receipt_long</mat-icon>
+    <h3>No Orders Found</h3>
+    <p>There are no orders matching the selected filter.</p>
+  </div>
+
+  <div class="orders-list" *ngIf="!loading && filteredOrders.length > 0">
+    <mat-card class="order-card" *ngFor="let order of filteredOrders">
+      <mat-card-header>
+        <div class="order-header">
+          <div class="order-info">
+            <h3>Order #{{ order.id.substring(0, 8) }}</h3>
+            <div class="order-meta">
+              <span class="customer-name">
+                <mat-icon>person</mat-icon>
+                {{ order.userName || 'Guest' }}
+              </span>
+              <span class="order-date">
+                <mat-icon>schedule</mat-icon>
+                {{ order.placedAt | date:'medium' }}
+              </span>
+              <span class="delivery-address">
+                <mat-icon>location_on</mat-icon>
+                {{ order.address }}
+              </span>
+            </div>
+          </div>
+          <div class="status-section">
+            <span class="status-badge" [ngClass]="getStatusClass(order.status)">
+              {{ getStatusLabel(order.status) }}
+            </span>
+          </div>
+        </div>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="order-items">
+          <h4>Order Items</h4>
+          <div class="items-list">
+            <div class="order-item" *ngFor="let item of order.items">
+              <img [src]="item.image" [alt]="item.name" *ngIf="item.image" />
+              <div class="item-details">
+                <span class="item-name">{{ item.name }}</span>
+                <span class="item-quantity">Qty: {{ item.qty }}</span>
+              </div>
+              <span class="item-price">₹{{ item.price * item.qty }}</span>
+            </div>
+          </div>
+          <div class="order-total">
+            <span>Total Amount:</span>
+            <strong>₹{{ order.total }}</strong>
+          </div>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <div class="action-buttons">
+          <button 
+            mat-raised-button 
+            color="primary"
+            *ngIf="canUpdateStatus(order.status)"
+            (click)="updateOrderStatus(order.id, getNextStatus(order.status)!)"
+          >
+            <mat-icon>arrow_forward</mat-icon>
+            Mark as {{ getNextStatusLabel(order.status) }}
+          </button>
+          <span class="status-complete" *ngIf="order.status === 'delivered'">
+            <mat-icon>check_circle</mat-icon>
+            Order Completed
+          </span>
+          <span class="status-complete cancelled" *ngIf="order.status === 'cancelled'">
+            <mat-icon>cancel</mat-icon>
+            Order Cancelled
+          </span>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<div class="order-history">
+  <h1>My Orders</h1>
+
+  <app-spinner *ngIf="loading"></app-spinner>
+
+  <div class="orders-container" *ngIf="!loading">
+    <mat-card *ngFor="let order of orders" class="order-card">
+      <mat-card-header>
+        <div class="order-header">
+          <div class="order-id">
+            <strong>Order ID:</strong> {{ order.id }}
+          </div>
+          <div class="order-status" [ngClass]="getStatusClass(order.status)">
+            {{ getStatusLabel(order.status) }}
+          </div>
+        </div>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="order-meta">
+          <div class="meta-item">
+            <mat-icon>schedule</mat-icon>
+            <span>{{ order.placedAt | date:'medium' }}</span>
+          </div>
+          <div class="meta-item">
+            <mat-icon>location_on</mat-icon>
+            <span>{{ order.address }}</span>
+          </div>
+        </div>
+
+        <div class="order-items">
+          <h3>Items ({{ order.items.length }})</h3>
+          <div class="item" *ngFor="let item of order.items">
+            <img [src]="item.image" [alt]="item.name" *ngIf="item.image" />
+            <div class="item-details">
+              <div class="item-name">{{ item.name }}</div>
+              <div class="item-price">₹{{ item.price }} × {{ item.qty }}</div>
+            </div>
+            <div class="item-total">₹{{ item.price * item.qty }}</div>
+          </div>
+        </div>
+
+        <div class="order-total">
+          <strong>Total:</strong>
+          <strong>₹{{ order.total }}</strong>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions *ngIf="canCancelOrder(order.status)">
+        <button mat-raised-button color="warn" (click)="cancelOrder(order.id)">
+          <mat-icon>cancel</mat-icon>
+          Cancel Order
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+    <div class="no-orders" *ngIf="orders.length === 0">
+      <mat-icon>receipt_long</mat-icon>
+      <h3>No orders yet</h3>
+      <p>Start shopping to place your first order!</p>
+      <button mat-raised-button color="primary" routerLink="/">Browse Menu</button>
+    </div>
+  </div>
+</div>

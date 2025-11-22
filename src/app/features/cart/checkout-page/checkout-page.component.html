@@ -1,0 +1,32 @@
+<div class="checkout-container">
+  <h2>Checkout</h2>
+  
+  <form [formGroup]="f" (ngSubmit)="submit()">
+    <mat-form-field appearance="fill" class="full">
+      <mat-label>Delivery Address</mat-label>
+      <textarea matInput formControlName="address" rows="3" placeholder="Enter your full delivery address"></textarea>
+      <mat-error *ngIf="f.controls['address'].invalid">Address is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full">
+      <mat-label>Payment Method</mat-label>
+      <input matInput formControlName="payment" readonly />
+      <mat-hint>Mock payment - Cash on delivery</mat-hint>
+    </mat-form-field>
+
+    <div class="summary">
+      <h3>Order Summary</h3>
+      <div class="summary-row">
+        <span>Total Amount:</span>
+        <strong>₹{{ total }}</strong>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button mat-raised-button type="button" routerLink="/cart">Back to Cart</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="f.invalid || total === 0">
+        Place Order
+      </button>
+    </div>
+  </form>
+</div>

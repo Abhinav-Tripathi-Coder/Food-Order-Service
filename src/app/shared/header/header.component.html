@@ -1,0 +1,115 @@
+<header class="app-header">
+  <!-- Top Navigation Bar -->
+  <div class="header-top">
+    <!-- Logo/Brand -->
+    <div class="logo-section">
+      <a routerLink="/" class="logo">
+        <mat-icon>restaurant_menu</mat-icon>
+        <span class="brand-name">TasteNest</span>
+      </a>
+    </div>
+
+    <!-- Delivery Location -->
+    <div class="location-section" (click)="updateLocation()">
+      <div class="location-content">
+        <mat-icon>location_on</mat-icon>
+        <div class="location-text">
+          <span class="deliver-to">Delivering to</span>
+          <span class="location-name">{{ deliveryLocation }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-section">
+      <div class="search-wrapper">
+        <input 
+          type="text"
+          class="search-input"
+          [(ngModel)]="searchQuery" 
+          placeholder="Search for food items..."
+          (keyup.enter)="onSearch()"
+        />
+        <button class="search-btn" (click)="onSearch()">
+          <mat-icon>search</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Right Section - Account, Orders, Cart -->
+    <div class="nav-right">
+      <!-- Account Section - Not Logged In -->
+      <div class="nav-item account-section" *ngIf="!(isLoggedIn$ | async)">
+        <a routerLink="/auth/login" class="nav-link">
+          <span class="nav-line2">Hello, sign in</span>
+        </a>
+      </div>
+
+      <!-- Account Section - Logged In -->
+      <div class="nav-item account-section" *ngIf="(isLoggedIn$ | async)">
+        <div class="nav-link" [matMenuTriggerFor]="accountMenu">
+          <span class="nav-line1">Hello, {{ userName }}</span>
+          <span class="nav-line2">Account</span>
+        </div>
+        <mat-menu #accountMenu="matMenu" class="account-dropdown">
+          <div class="account-menu-header">
+            <h3>Your Account</h3>
+          </div>
+          <button mat-menu-item routerLink="/admin" *ngIf="isAdmin">
+            <mat-icon>admin_panel_settings</mat-icon>
+            <span>Admin Dashboard</span>
+          </button>
+          <button mat-menu-item routerLink="/profile">
+            <mat-icon>person</mat-icon>
+            <span>Your Account Profile</span>
+          </button>
+          <button mat-menu-item routerLink="/orders">
+            <mat-icon>receipt_long</mat-icon>
+            <span>Your Orders</span>
+          </button>
+          <button mat-menu-item routerLink="/wishlist">
+            <mat-icon>favorite</mat-icon>
+            <span>Your Wish List</span>
+            <span class="wishlist-count" *ngIf="(wishlistCount$ | async) as count">{{ count }}</span>
+          </button>
+          <div class="menu-divider"></div>
+          <button mat-menu-item (click)="openSettings()">
+            <mat-icon>settings</mat-icon>
+            <span>Settings</span>
+          </button>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            <span>Sign Out</span>
+          </button>
+        </mat-menu>
+      </div>
+
+      <!-- Returns & Orders -->
+      <div class="nav-item">
+        <a routerLink="/orders" class="nav-link">
+          <span class="nav-line2">Returns & Orders</span>
+        </a>
+      </div>
+
+      <!-- Cart -->
+      <div class="nav-item cart-section">
+        <a routerLink="/cart" class="cart-link">
+          <div class="cart-icon-wrapper">
+            <mat-icon class="cart-icon">shopping_cart</mat-icon>
+            <span class="cart-badge" *ngIf="(count$ | async) as count">{{ count }}</span>
+          </div>
+          <span class="cart-text">Cart</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="header-bottom">
+    <nav class="nav-categories">
+      <a routerLink="/" class="category-link" [class.active]="activeCategory === 'home'">Home</a>
+      <a routerLink="/" [queryParams]="{category: 'all'}" class="category-link" [class.active]="activeCategory === 'all'">Menu</a>
+      <a routerLink="/orders" class="category-link">Service</a>
+    </nav>
+  </div>
+</header>
