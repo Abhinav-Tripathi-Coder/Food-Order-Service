@@ -1,14 +1,3 @@
-// import { Injectable } from '@angular/core';
-
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class AuthService {
-
-//   constructor() { }
-// }
-
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
@@ -63,7 +52,6 @@ export class AuthService {
           throw new Error('Invalid username or password');
         }
 
-        // Update last login
         const updatedUser = {
           ...user,
           lastLogin: new Date().toISOString()
@@ -71,7 +59,6 @@ export class AuthService {
         
         this.http.patch(`/api/users/${user.id}`, { lastLogin: updatedUser.lastLogin }).subscribe();
         
-        // Create login log
         const loginLog: LoginLog = {
           id: uuidv4(),
           userId: user.id,
@@ -112,7 +99,6 @@ export class AuthService {
     return this._user$.value?.role === 'admin';
   }
 
-  // Admin functions
   getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>('/api/users');
   }
@@ -133,7 +119,6 @@ export class AuthService {
   updateUserProfile(id: string, updates: Partial<User>): Observable<User> {
     return this.http.patch<User>(`/api/users/${id}`, updates).pipe(
       tap(updatedUser => {
-        // Update the current user in memory and localStorage
         const currentUser = this._user$.value;
         if (currentUser && currentUser.id === id) {
           const newUser = { ...currentUser, ...updates };

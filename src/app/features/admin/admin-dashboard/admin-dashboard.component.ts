@@ -1,16 +1,3 @@
-// import { Component } from '@angular/core';
-
-// @Component({
-//   selector: 'app-admin-dashboard',
-//   imports: [],
-//   templateUrl: './admin-dashboard.component.html',
-//   styleUrl: './admin-dashboard.component.scss'
-// })
-// export class AdminDashboardComponent {
-
-// }
-
-
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../../services/product.service';
 import { OrderService } from '../../../services/order.service';

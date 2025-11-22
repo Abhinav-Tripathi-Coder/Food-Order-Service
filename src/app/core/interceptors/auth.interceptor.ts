@@ -1,9 +1,3 @@
-// import { HttpInterceptorFn } from '@angular/common/http';
-
-// export const authInterceptor: HttpInterceptorFn = (req, next) => {
-//   return next(req);
-// };
-
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
@@ -14,7 +8,6 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private auth: AuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    // attach token if present in AuthService (mock)
     const token = this.auth.token;
     if (!token) return next.handle(req);
 

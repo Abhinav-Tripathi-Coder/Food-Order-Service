@@ -31,7 +31,6 @@ export class OrderHistoryComponent implements OnInit {
 
     this.orderService.list().subscribe({
       next: orders => {
-        // Filter orders for current user
         this.orders = orders
           .filter(order => order.userId === currentUser.id)
           .sort((a, b) => 
@@ -69,7 +68,6 @@ export class OrderHistoryComponent implements OnInit {
   }
 
   canCancelOrder(status: string): boolean {
-    // User can only cancel if order is still in 'placed' status
     return status === 'placed';
   }
 
@@ -77,7 +75,6 @@ export class OrderHistoryComponent implements OnInit {
     if (confirm('Are you sure you want to cancel this order?')) {
       this.orderService.cancelOrder(orderId).subscribe({
         next: updatedOrder => {
-          // Update the order in the local array
           const index = this.orders.findIndex(o => o.id === orderId);
           if (index !== -1) {
             this.orders[index] = updatedOrder;

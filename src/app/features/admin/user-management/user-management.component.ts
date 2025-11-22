@@ -71,7 +71,6 @@ export class UserManagementComponent implements OnInit {
       name: user.name,
       role: user.role
     });
-    // Make password optional when editing
     this.userForm.get('password')?.clearValidators();
     this.userForm.get('password')?.updateValueAndValidity();
     this.showForm = true;
@@ -85,7 +84,6 @@ export class UserManagementComponent implements OnInit {
     const formValue = this.userForm.value;
 
     if (this.editingUser) {
-      // Update existing user
       const updates: Partial<User> = {
         name: formValue.name,
         role: formValue.role
@@ -104,7 +102,6 @@ export class UserManagementComponent implements OnInit {
         error: err => alert('Error updating user: ' + err.message)
       });
     } else {
-      // Create new user
       this.authService.createUser(formValue).subscribe({
         next: () => {
           alert('User created successfully!');

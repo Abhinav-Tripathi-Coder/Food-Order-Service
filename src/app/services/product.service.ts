@@ -1,14 +1,3 @@
-// import { Injectable } from '@angular/core';
-
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class ProductService {
-
-//   constructor() { }
-// }
-
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../models';
@@ -28,7 +17,6 @@ export class ProductService {
     return this.http.get<Product>(`${this.base}/${id}`);
   }
 
-  // admin operations
   create(p: Partial<Product>) {
     return this.http.post<Product>(this.base, p);
   }

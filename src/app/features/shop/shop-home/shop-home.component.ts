@@ -1,15 +1,3 @@
-// import { Component } from '@angular/core';
-
-// @Component({
-//   selector: 'app-shop-home',
-//   imports: [],
-//   templateUrl: './shop-home.component.html',
-//   styleUrl: './shop-home.component.scss'
-// })
-// export class ShopHomeComponent {
-
-// }
-
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../services/product.service';
@@ -35,7 +23,6 @@ export class ShopHomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Subscribe to query params for category filtering and search
     this.route.queryParams.subscribe(params => {
       this.selectedCategory = params['category'] || 'all';
       const searchQuery = params['search'];
@@ -49,7 +36,6 @@ export class ShopHomeComponent implements OnInit {
       next: p => { 
         this.products = p;
         
-        // Apply search filter if provided
         if (searchQuery) {
           this.products = this.products.filter(product =>
             product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -85,7 +71,6 @@ export class ShopHomeComponent implements OnInit {
       image: item.image 
     });
     
-    // Show a success message
     alert(`${item.name} added to cart!`);
   }
 }

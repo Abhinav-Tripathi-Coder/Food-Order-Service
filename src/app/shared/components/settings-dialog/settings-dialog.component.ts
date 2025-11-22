@@ -51,7 +51,6 @@ export class SettingsDialogComponent implements OnInit {
 
     const formValue = this.passwordForm.value;
 
-    // Fetch the full user data from server to verify current password
     this.authService.getAllUsers().subscribe({
       next: (users: User[]) => {
         const fullUser = users.find((u: User) => u.id === currentUser.id);
@@ -61,13 +60,11 @@ export class SettingsDialogComponent implements OnInit {
           return;
         }
 
-        // Verify current password
         if (fullUser.password !== formValue.currentPassword) {
           alert('Current password is incorrect');
           return;
         }
 
-        // Update password
         this.authService.updateUserProfile(currentUser.id, { 
           password: formValue.newPassword 
         }).subscribe({

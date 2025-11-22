@@ -60,7 +60,6 @@ export class ProfileComponent implements OnInit {
         this.successMessage = 'Profile updated successfully!';
         this.currentUser = updatedUser;
         
-        // Update local storage
         const storedUser = localStorage.getItem('fos_user');
         if (storedUser) {
           const user = JSON.parse(storedUser);

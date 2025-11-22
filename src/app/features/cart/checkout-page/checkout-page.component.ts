@@ -1,16 +1,3 @@
-// import { Component } from '@angular/core';
-
-// @Component({
-//   selector: 'app-checkout-page',
-//   imports: [],
-//   templateUrl: './checkout-page.component.html',
-//   styleUrl: './checkout-page.component.scss'
-// })
-// export class CheckoutPageComponent {
-
-// }
-
-
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CartService } from '../../../services/cart.service';
@@ -48,7 +35,6 @@ export class CheckoutPageComponent {
       return;
     }
 
-    // Snapshot current items
     const currentItems = (this.cartService as any).itemsSubject?.value ?? [];
     const currentUser = this.authService.currentUser;
     

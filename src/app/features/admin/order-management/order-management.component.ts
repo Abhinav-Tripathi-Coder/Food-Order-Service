@@ -61,7 +61,6 @@ export class OrderManagementComponent implements OnInit {
   updateOrderStatus(orderId: string, newStatus: Order['status']) {
     this.orderService.updateStatus(orderId, newStatus).subscribe({
       next: updatedOrder => {
-        // Update the order in the local array
         const index = this.orders.findIndex(o => o.id === orderId);
         if (index !== -1) {
           this.orders[index] = updatedOrder;

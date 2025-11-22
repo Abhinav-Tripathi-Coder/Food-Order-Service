@@ -28,7 +28,6 @@ import { MatInputModule } from '@angular/material/input';
     OrderHistoryComponent,
     ProfileComponent,
     WishlistComponent
-    // add any other components that belong to root module (if any)
   ],
   imports: [
     BrowserModule,

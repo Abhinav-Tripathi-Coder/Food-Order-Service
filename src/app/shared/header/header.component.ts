@@ -1,16 +1,3 @@
-// import { Component } from '@angular/core';
-
-// @Component({
-//   selector: 'app-header',
-//   imports: [],
-//   templateUrl: './header.component.html',
-//   styleUrl: './header.component.scss'
-// })
-// export class HeaderComponent {
-
-// }
-
-
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -55,13 +42,11 @@ export class HeaderComponent implements OnInit {
       map(user => !!user)
     );
     
-    // Load saved location from localStorage
     const savedLocation = localStorage.getItem('deliveryLocation');
     if (savedLocation) {
       this.deliveryLocation = savedLocation;
     }
 
-    // Subscribe to user changes
     this.authService.user$.subscribe(user => {
       if (user) {
         this.userName = user.name;
@@ -74,19 +59,16 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Track active category based on route changes
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
       this.updateActiveCategory();
     });
     
-    // Initial check
     this.updateActiveCategory();
   }
 
   updateActiveCategory() {
-    // Get the first child route's query params
     let currentRoute = this.route.root;
     while (currentRoute.firstChild) {
       currentRoute = currentRoute.firstChild;
@@ -105,7 +87,6 @@ export class HeaderComponent implements OnInit {
 
   onSearch(): void {
     if (this.searchQuery.trim()) {
-      // Navigate to home with search query
       this.router.navigate(['/'], { 
         queryParams: { search: this.searchQuery } 
       });
@@ -116,7 +97,6 @@ export class HeaderComponent implements OnInit {
     const newLocation = prompt('Enter delivery location:', this.deliveryLocation);
     if (newLocation && newLocation.trim()) {
       this.deliveryLocation = newLocation.trim();
-      // You can save this to localStorage or a service
       localStorage.setItem('deliveryLocation', this.deliveryLocation);
     }
   }
@@ -134,7 +114,6 @@ export class HeaderComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // Password was updated successfully
         console.log('Password updated');
       }
     });
